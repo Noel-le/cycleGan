@@ -1,0 +1,8 @@
+albumentations==1.2.1
+numpy==1.22.3
+opencv_python_headless==4.6.0.66
+Pillow==9.2.0
+streamlit==1.10.0
+torch==1.8.1+cpu
+torchvision==0.9.1+cpu
+tqdm==4.62.3
