@@ -7,6 +7,7 @@ import numpy as np
 import test
 
 def makeDir():
+    path_saved_imgs = './saved_images'
     path_h = './data/train/horses'
     path_z = './data/train/zebras'
 
@@ -15,6 +16,9 @@ def makeDir():
 
     if not os.path.isdir(path_z):
         os.makedirs(path_z)
+    
+    if not os.path.isdir(path_saved_imgs):
+        os.makedirs(path_saved_imgs)
 
 def photo2draw():
     test.main()
