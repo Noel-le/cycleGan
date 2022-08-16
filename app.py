@@ -1,4 +1,5 @@
 from functools import cache
+from imp import load_compiled
 from cv2 import imread
 import streamlit as st
 import os
@@ -8,39 +9,39 @@ import numpy as np
 import test
 import requests 
 
-@st.cache
-def checkPoint():
+@st.cache(suppress_st_warning=True)
+def load_model():
     if not 'genh.pth.tar' in os.listdir('.'):
-        txt = st.warning("genh.pth.tar is not in dir")
+        # txt = st.warning("genh.pth.tar is not in dir")
         url = "https://www.dropbox.com/s/6ufvrdirivkex0u/genh.pth.tar?dl=1"
         r = requests.get(url, allow_redirects=True)
         open("genh.pth.tar", 'wb').write(r.content)
         del r
-        txt.success("genh.pth.tar upload")
+        # txt.success("genh.pth.tar upload")
 
     if not 'genz.pth.tar' in os.listdir('.'):
-        txt = st.warning("genh.pth.tar is not in dir")
+        # txt = st.warning("genh.pth.tar is not in dir")
         url = "https://www.dropbox.com/s/otrzvhgwj3fi8mk/genz.pth.tar?dl=1"
         r = requests.get(url, allow_redirects=True)
         open("genz.pth.tar", 'wb').write(r.content)
         del r
-        txt.success("genz.pth.tar upload")
+        # txt.success("genz.pth.tar upload")
 
     if not 'critich.pth.tar' in os.listdir('.'):
-        txt = st.warning("genh.pth.tar is not in dir")
+        # txt = st.warning("genh.pth.tar is not in dir")
         url = "https://www.dropbox.com/s/88bsu5a7lhs23ry/critich.pth.tar?dl=1"
         r = requests.get(url, allow_redirects=True)
         open("critich.pth.tar", 'wb').write(r.content)
         del r
-        txt.success("critich.pth.tar upload")
+        # txt.success("critich.pth.tar upload")
 
     if not 'criticz.pth.tar' in os.listdir('.'):
-        txt = st.warning("genh.pth.tar is not in dir")
+        # txt = st.warning("genh.pth.tar is not in dir")
         url = "https://www.dropbox.com/s/0b3ytkd2ot09iux/criticz.pth.tar?dl=1"
         r = requests.get(url, allow_redirects=True)
         open("criticz.pth.tar", 'wb').write(r.content)
         del r
-        txt.success("criticz.pth.tar upload")
+        # txt.success("criticz.pth.tar upload")
 
 def makeDir():
     path_saved_imgs = './saved_images'
@@ -56,11 +57,8 @@ def makeDir():
     if not os.path.isdir(path_saved_imgs):
         os.makedirs(path_saved_imgs)
 
-
-
-
 def photo2draw():
-    checkPoint()
+    load_model()
     test.main()
     img = imread('./saved_images/zebra_0.png')
     st.image(img, caption='output', use_column_width=True)
@@ -91,3 +89,6 @@ def main():
 
 
 main()
+
+
+
