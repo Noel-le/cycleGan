@@ -1,3 +1,4 @@
+from functools import cache
 from cv2 import imread
 import streamlit as st
 import os
@@ -7,22 +8,7 @@ import numpy as np
 import test
 import requests 
 
-
-def makeDir():
-    path_saved_imgs = './saved_images'
-    path_h = './data/train/horses'
-    path_z = './data/train/zebras'
-
-    if not os.path.isdir(path_h):
-        os.makedirs(path_h)
-
-    if not os.path.isdir(path_z):
-        os.makedirs(path_z)
-    
-    if not os.path.isdir(path_saved_imgs):
-        os.makedirs(path_saved_imgs)
-
-
+@st.cache
 def checkPoint():
     if not 'genh.pth.tar' in os.listdir('.'):
         txt = st.warning("genh.pth.tar is not in dir")
@@ -56,7 +42,22 @@ def checkPoint():
         del r
         txt.success("criticz.pth.tar upload")
 
+def makeDir():
+    path_saved_imgs = './saved_images'
+    path_h = './data/train/horses'
+    path_z = './data/train/zebras'
+
+    if not os.path.isdir(path_h):
+        os.makedirs(path_h)
+
+    if not os.path.isdir(path_z):
+        os.makedirs(path_z)
     
+    if not os.path.isdir(path_saved_imgs):
+        os.makedirs(path_saved_imgs)
+
+
+
 
 def photo2draw():
     checkPoint()
@@ -65,6 +66,7 @@ def photo2draw():
     st.image(img, caption='output', use_column_width=True)
     img_array = np.array(img)
     cv2.imwrite('./saved_images/0.png', cv2.cvtColor(img_array, cv2.IMREAD_COLOR))
+
 
 def upload_img():
     makeDir()
@@ -80,12 +82,12 @@ def upload_img():
         cv2.imwrite('./data/train/zebras/0.png', cv2.cvtColor(img_array, cv2.IMREAD_COLOR))
         photo2draw()
 
+
 def main():
     st.title('Altist')
     describe1 = '<p style="font-size: 18px;">이미지를 업로드 하시면 똑똑한 사람냄새의 AI 화가 Altist가 사람냄새의 스타일로 그림을 그려줄거에요 🎨 평소 사람냄새의 그림을 좋아해주신 분들이라면 이제 원하는 이미지를 마음껏 다운받아 보세요 😊💖</p>'
     st.markdown(describe1, unsafe_allow_html=True)
     upload_img()
 
+
 main()
-
-
